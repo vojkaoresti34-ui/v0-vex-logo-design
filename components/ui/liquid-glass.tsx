@@ -1,22 +1,7 @@
-You are given a task to integrate an existing React component in the codebase
-
-The codebase should support:
-- shadcn project structure  
-- Tailwind CSS
-- Typescript
-
-If it doesn't, provide instructions on how to setup project via shadcn CLI, install Tailwind or Typescript.
-
-Determine the default path for components and styles. 
-If default path for components is not /components/ui, provide instructions on why it's important to create this folder
-Copy-paste this component to /components/ui folder:
-```tsx
-liquid-glass.tsx
 "use client";
 
 import React from "react";
 
-// Types
 interface GlassEffectProps {
   children: React.ReactNode;
   className?: string;
@@ -25,14 +10,7 @@ interface GlassEffectProps {
   target?: string;
 }
 
-interface DockIcon {
-  src: string;
-  alt: string;
-  onClick?: () => void;
-}
-
-// Glass Effect Wrapper Component
-const GlassEffect: React.FC<GlassEffectProps> = ({
+export const GlassEffect: React.FC<GlassEffectProps> = ({
   children,
   className = "",
   style = {},
@@ -47,10 +25,9 @@ const GlassEffect: React.FC<GlassEffectProps> = ({
 
   const content = (
     <div
-      className={`relative flex font-semibold overflow-hidden text-black cursor-pointer transition-all duration-700 ${className}`}
+      className={`relative flex font-semibold overflow-hidden cursor-pointer transition-all duration-700 ${className}`}
       style={glassStyle}
     >
-      {/* Glass Layers */}
       <div
         className="absolute inset-0 z-0 overflow-hidden rounded-inherit rounded-3xl"
         style={{
@@ -61,17 +38,15 @@ const GlassEffect: React.FC<GlassEffectProps> = ({
       />
       <div
         className="absolute inset-0 z-10 rounded-inherit"
-        style={{ background: "rgba(255, 255, 255, 0.25)" }}
+        style={{ background: "rgba(255, 255, 255, 0.08)" }}
       />
       <div
         className="absolute inset-0 z-20 rounded-inherit rounded-3xl overflow-hidden"
         style={{
           boxShadow:
-            "inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.5)",
+            "inset 2px 2px 1px 0 rgba(255, 255, 255, 0.1), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.1)",
         }}
       />
-
-      {/* Content */}
       <div className="relative z-30">{children}</div>
     </div>
   );
@@ -85,41 +60,14 @@ const GlassEffect: React.FC<GlassEffectProps> = ({
   );
 };
 
-// Dock Component
-const GlassDock: React.FC<{ icons: DockIcon[]; href?: string }> = ({
-  icons,
-  href,
-}) => (
-  <GlassEffect
-    href={href}
-    className="rounded-3xl p-3 hover:p-4 hover:rounded-4xl"
-  >
-    <div className="flex items-center justify-center gap-2 rounded-3xl p-3 py-0 px-0.5 overflow-hidden">
-      {icons.map((icon, index) => (
-        <img
-          key={index}
-          src={icon.src}
-          alt={icon.alt}
-          className="w-16 h-16 transition-all duration-700 hover:scale-110 cursor-pointer"
-          style={{
-            transformOrigin: "center center",
-            transitionTimingFunction: "cubic-bezier(0.175, 0.885, 0.32, 2.2)",
-          }}
-          onClick={icon.onClick}
-        />
-      ))}
-    </div>
-  </GlassEffect>
-);
-
-// Button Component
-const GlassButton: React.FC<{ children: React.ReactNode; href?: string }> = ({
+export const GlassButton: React.FC<{ children: React.ReactNode; href?: string; className?: string }> = ({
   children,
   href,
+  className = "",
 }) => (
   <GlassEffect
     href={href}
-    className="rounded-3xl px-10 py-6 hover:px-11 hover:py-7 hover:rounded-4xl overflow-hidden"
+    className={`rounded-2xl px-8 py-4 hover:px-9 hover:py-5 hover:rounded-3xl overflow-hidden ${className}`}
   >
     <div
       className="transition-all duration-700 hover:scale-95"
@@ -132,8 +80,7 @@ const GlassButton: React.FC<{ children: React.ReactNode; href?: string }> = ({
   </GlassEffect>
 );
 
-// SVG Filter Component
-const GlassFilter: React.FC = () => (
+export const GlassFilter: React.FC = () => (
   <svg style={{ display: "none" }}>
     <filter
       id="glass-distortion"
@@ -185,100 +132,3 @@ const GlassFilter: React.FC = () => (
     </filter>
   </svg>
 );
-// Main Component
-export const Component = () => {
-  const dockIcons: DockIcon[] = [
-    {
-      src: "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/a13d1acfd046f503f987c1c95af582c8_low_res_Claude.png",
-      alt: "Claude",
-    },
-    {
-      src: "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/9e80c50a5802d3b0a7ec66f3fe4ce348_low_res_Finder.png",
-      alt: "Finder",
-    },
-    {
-      src: "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/c2c4a538c2d42a8dc0927d7d6530d125_low_res_ChatGPT___Liquid_Glass__Default_.png",
-      alt: "Chatgpt",
-    },
-    {
-      src: "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/6d26d432bd65c522b0708185c0768ec3_low_res_Maps.png",
-      alt: "Maps",
-    },
-    {
-      src: "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/7c59c945731aecf4f91eb8c2c5f867ce_low_res_Safari.png",
-      alt: "Safari",
-    },
-    {
-      src: "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/b7f24edc7183f63dbe34c1943bef2967_low_res_Steam___Liquid_Glass__Default_.png",
-      alt: "Steam",
-    },
-  ];
-
-  return (
-    <div
-      className="min-h-screen h-full flex items-center justify-center font-light relative overflow-hidden w-full"
-      style={{
-        background: `url("https://images.unsplash.com/photo-1432251407527-504a6b4174a2?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") center center`,
-        animation: "moveBackground 60s linear infinite",
-      }}
-    >
-      <GlassFilter />
-
-      <div className="flex flex-col gap-6 items-center justify-center w-full">
-        <GlassDock icons={dockIcons} href="https://x.com/notsurajgaud" />
-
-        <GlassButton href="https://x.com/notsurajgaud">
-          <div className="text-xl text-white">
-            <p>How can i help you today?</p>
-          </div>
-        </GlassButton>
-      </div>     
-    </div>
-  );
-}
-
-
-
-demo.tsx
-import { Component } from "@/components/ui/liquid-glass";
-
-const DemoOne = () => {
-  return <Component />;
-};
-
-export { DemoOne };
-
-```
-
-Extend existing Tailwind 4 index.css with this code (or if project uses Tailwind 3, extend tailwind.config.js or globals.css):
-```css
-@import "tailwindcss";
-@import "tw-animate-css";
-
-
-@keyframes moveBackground {
-  from {
-    background-position: 0% 0%;
-  }
-  to {
-    background-position: 0% -1000%;
-  }
-}
-```
-
-Implementation Guidelines
- 1. Analyze the component structure and identify all required dependencies
- 2. Review the component's argumens and state
- 3. Identify any required context providers or hooks and install them
- 4. Questions to Ask
- - What data/props will be passed to this component?
- - Are there any specific state management requirements?
- - Are there any required assets (images, icons, etc.)?
- - What is the expected responsive behavior?
- - What is the best place to use this component in the app?
-
-Steps to integrate
- 0. Copy paste all the code above in the correct directories
- 1. Install external dependencies
- 2. Fill image assets with Unsplash stock images you know exist
- 3. Use lucide-react icons for svgs or logos if component requires them
