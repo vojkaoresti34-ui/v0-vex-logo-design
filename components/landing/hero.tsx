@@ -4,72 +4,118 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import Link from "next/link";
 import { GlassEffect, GlassFilter } from "@/components/ui/liquid-glass";
+import { Globe } from "@/components/ui/cobe-globe";
+
+const markers = [
+  { id: "sf", location: [37.7595, -122.4367] as [number, number], label: "San Francisco" },
+  { id: "nyc", location: [40.7128, -74.006] as [number, number], label: "New York" },
+  { id: "tokyo", location: [35.6762, 139.6503] as [number, number], label: "Tokyo" },
+  { id: "london", location: [51.5074, -0.1278] as [number, number], label: "London" },
+  { id: "sydney", location: [-33.8688, 151.2093] as [number, number], label: "Sydney" },
+  { id: "capetown", location: [-33.9249, 18.4241] as [number, number], label: "Cape Town" },
+  { id: "dubai", location: [25.2048, 55.2708] as [number, number], label: "Dubai" },
+  { id: "paris", location: [48.8566, 2.3522] as [number, number], label: "Paris" },
+  { id: "saopaulo", location: [-23.5505, -46.6333] as [number, number], label: "São Paulo" },
+];
+
+const arcs = [
+  { id: "sf-tokyo", from: [37.7595, -122.4367] as [number, number], to: [35.6762, 139.6503] as [number, number], label: "SF → Tokyo" },
+  { id: "nyc-london", from: [40.7128, -74.006] as [number, number], to: [51.5074, -0.1278] as [number, number], label: "NYC → London" },
+];
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center pt-32 pb-20 overflow-hidden">
       <GlassFilter />
       
-      {/* Background Effects */}
+      {/* Background Effects - Refined for Light UI */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
+            scale: [1, 1.1, 1],
+            opacity: [0.3, 0.4, 0.3],
+            x: [0, 20, 0],
+            y: [0, -20, 0],
           }}
           transition={{
-            duration: 8,
+            duration: 12,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: "linear",
           }}
-          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px]"
+          className="absolute -top-1/4 -left-1/4 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[140px]"
         />
         <motion.div
           animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2],
+            scale: [1.1, 1, 1.1],
+            opacity: [0.2, 0.3, 0.2],
+            x: [0, -30, 0],
+            y: [0, 30, 0],
           }}
           transition={{
-            duration: 10,
+            duration: 15,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: "linear",
           }}
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary/15 rounded-full blur-[100px]"
+          className="absolute -bottom-1/4 -right-1/4 w-[700px] h-[700px] bg-secondary/5 rounded-full blur-[120px]"
         />
+      </div>
+
+      {/* Interactive Globe Background */}
+      <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[800px] h-[800px] md:w-[1200px] md:h-[1200px] opacity-80 pointer-events-none z-0">
+        <Globe
+          markers={markers}
+          arcs={arcs}
+          markerColor={[0.9, 1.0, 0.16]}
+          baseColor={[0.3, 0.3, 0.3]} // Darker base color to be visible on light background
+          arcColor={[0.04, 0.29, 0.31]}
+          glowColor={[0.94, 0.93, 0.91]}
+          dark={0}
+          mapBrightness={6}
+          markerSize={0.025}
+          markerElevation={0.01}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
       </div>
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-6 text-center">
         {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <GlassEffect className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8">
-            <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            <span className="text-sm text-muted-foreground">AI-Powered Career Acceleration</span>
-          </GlassEffect>
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-10 bg-white border border-border shadow-sm">
+            <span className="w-2 h-2 bg-primary rounded-full" />
+            <span className="text-xs font-bold uppercase tracking-widest text-[#898A8D]">AI-Powered Career Acceleration</span>
+          </div>
         </motion.div>
 
         {/* Headline */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-foreground mb-6 text-balance"
-          style={{ letterSpacing: "-0.02em" }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="text-6xl md:text-7xl lg:text-8xl font-[900] tracking-[-0.04em] text-foreground mb-8 text-balance uppercase"
         >
           Land Your Dream Job{" "}
-          <span className="text-primary">Faster</span> and{" "}
-          <span className="text-primary">Smarter</span>
+          <span className="inline-block relative">
+            <span className="relative z-10 italic">Faster</span>
+            <motion.span 
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 1, delay: 1 }}
+              className="absolute bottom-2 left-0 h-[0.15em] bg-primary/30 -z-0"
+            />
+          </span>{" "}
+          <span className="text-secondary">& Smarter</span>
         </motion.h1>
 
         {/* Subheadline */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+          transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="text-lg md:text-xl text-[#898A8D] max-w-2xl mx-auto mb-12 leading-relaxed font-medium"
         >
           Vex identifies your skill gaps, generates personalized courses, improves your CV, 
           and automatically applies to jobs. Your AI career co-pilot.
@@ -77,24 +123,24 @@ export function Hero() {
 
         {/* CTAs */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
           <Link
-            href="#pricing"
-            className="group bg-primary text-primary-foreground px-8 py-4 rounded-xl text-lg font-semibold hover:brightness-110 hover:scale-105 transition-all duration-200 flex items-center gap-2 shadow-lg shadow-primary/25"
+            href="#"
+            className="group bg-primary text-primary-foreground px-10 py-5 rounded-full text-lg font-bold hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 shadow-2xl shadow-primary/40 border-b-4 border-primary/20"
           >
             Start Free Trial
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link
             href="#how-it-works"
-            className="group flex items-center gap-3 px-8 py-4 rounded-xl text-lg font-semibold text-foreground hover:bg-secondary transition-all duration-200"
+            className="group flex items-center gap-3 px-10 py-5 rounded-full text-lg font-bold text-foreground hover:bg-secondary/5 transition-all duration-300 border border-border"
           >
-            <span className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-              <Play className="w-4 h-4 fill-current" />
+            <span className="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Play className="w-4 h-4 fill-current ml-1" />
             </span>
             See How It Works
           </Link>
@@ -125,17 +171,17 @@ export function Hero() {
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-4">
-                  <div className="bg-secondary/50 rounded-lg p-4">
+                  <div className="bg-secondary rounded-lg p-4">
                     <div className="text-primary font-bold text-2xl">87%</div>
-                    <div className="text-xs text-muted-foreground">Skill Match</div>
+                    <div className="text-xs text-secondary-foreground/60">Skill Match</div>
                   </div>
-                  <div className="bg-secondary/50 rounded-lg p-4">
+                  <div className="bg-secondary rounded-lg p-4">
                     <div className="text-primary font-bold text-2xl">12</div>
-                    <div className="text-xs text-muted-foreground">Courses</div>
+                    <div className="text-xs text-secondary-foreground/60">Courses</div>
                   </div>
-                  <div className="bg-secondary/50 rounded-lg p-4">
+                  <div className="bg-secondary rounded-lg p-4">
                     <div className="text-primary font-bold text-2xl">24</div>
-                    <div className="text-xs text-muted-foreground">Applications</div>
+                    <div className="text-xs text-secondary-foreground/60">Applications</div>
                   </div>
                 </div>
                 <div className="flex gap-2">

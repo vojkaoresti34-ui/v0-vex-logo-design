@@ -45,23 +45,23 @@ export function FAQ() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="faq" className="py-24 relative">
+    <section id="faq" className="py-32 relative bg-background">
       <div className="max-w-[800px] mx-auto px-6" ref={containerRef}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-20"
         >
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+          <span className="text-secondary font-bold text-xs uppercase tracking-[0.3em] mb-6 block">
             FAQ
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6" style={{ letterSpacing: "-0.02em" }}>
+          <h2 className="text-5xl md:text-6xl font-[900] text-foreground mb-8 tracking-tighter uppercase leading-none">
             Frequently Asked
             <br />
-            <span className="text-primary">Questions</span>
+            <span className="text-secondary italic">Questions</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-xl text-[#898A8D] font-medium">
             Everything you need to know about Vex.
           </p>
         </motion.div>
@@ -69,19 +69,19 @@ export function FAQ() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
-          <Accordion type="single" collapsible className="space-y-4">
+          <Accordion type="single" collapsible className="space-y-6">
             {faqs.map((faq, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="bg-card border border-border rounded-2xl px-6 data-[state=open]:border-primary/50 transition-colors"
+                className="border border-border/10 rounded-[2rem] px-8 py-2 bg-white/50 backdrop-blur-sm data-[state=open]:border-primary transition-all duration-500 shadow-sm"
               >
-                <AccordionTrigger className="text-left text-foreground font-semibold hover:no-underline py-6">
-                  {faq.question}
+                <AccordionTrigger className="text-left text-secondary font-black uppercase tracking-tight text-lg hover:no-underline py-8 group">
+                  <span className="group-hover:text-primary transition-colors">{faq.question}</span>
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-6 leading-relaxed">
+                <AccordionContent className="text-[#898A8D] font-medium text-lg pb-8 leading-relaxed">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

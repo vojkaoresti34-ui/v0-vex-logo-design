@@ -60,53 +60,53 @@ export function Testimonials() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="testimonials" className="py-24 relative">
+    <section id="testimonials" className="py-32 relative bg-[#F9F7F2]">
       <div className="max-w-[1200px] mx-auto px-6" ref={containerRef}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-24"
         >
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
-            Testimonials
+          <span className="text-secondary font-bold text-xs uppercase tracking-[0.3em] mb-6 block">
+            Success Stories
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6" style={{ letterSpacing: "-0.02em" }}>
+          <h2 className="text-5xl md:text-6xl font-[900] text-foreground mb-8 tracking-tighter uppercase leading-none">
             Loved by Thousands of
             <br />
-            <span className="text-primary">Successful Job Seekers</span>
+            <span className="text-secondary italic">Successful Job Seekers</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-[#898A8D] max-w-2xl mx-auto leading-relaxed font-medium">
             Join over 10,000 professionals who landed their dream jobs with Vex.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.name}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1"
+              transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-white border border-border/10 rounded-3xl p-8 hover:border-primary transition-all duration-500 shadow-xl shadow-black/[0.02] group"
             >
-              <div className="flex gap-1 mb-4">
+              <div className="flex gap-1 mb-8">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-primary text-primary" />
                 ))}
               </div>
-              <p className="text-foreground mb-6 leading-relaxed">&ldquo;{testimonial.quote}&rdquo;</p>
-              <div className="flex items-center gap-4 pt-4 border-t border-border">
-                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+              <p className="text-lg text-foreground mb-8 font-medium leading-relaxed italic">&ldquo;{testimonial.quote}&rdquo;</p>
+              <div className="flex items-center gap-4 pt-6 border-t border-border/50">
+                <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center text-primary font-black text-xl shadow-lg shadow-secondary/10">
                   {testimonial.avatar}
                 </div>
                 <div className="flex-1">
-                  <div className="font-semibold text-foreground">{testimonial.name}</div>
-                  <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                  <div className="text-xs text-primary">{testimonial.company}</div>
+                  <div className="font-black text-secondary uppercase text-sm tracking-widest">{testimonial.name}</div>
+                  <div className="text-xs text-[#898A8D] font-bold uppercase tracking-wider mt-1">{testimonial.role}</div>
+                  <div className="text-xs text-secondary font-black uppercase tracking-widest mt-2">{testimonial.company}</div>
                 </div>
               </div>
-              <div className="mt-4 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium inline-block">
+              <div className="mt-8 px-4 py-2 rounded-full bg-primary/20 text-secondary text-xs font-black uppercase tracking-widest inline-block border border-primary/30">
                 {testimonial.metric}
               </div>
             </motion.div>

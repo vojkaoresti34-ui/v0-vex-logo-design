@@ -7,7 +7,6 @@ import { Twitter, Linkedin, Github } from "lucide-react";
 const footerLinks = {
   product: [
     { label: "Features", href: "#features" },
-    { label: "Pricing", href: "#pricing" },
     { label: "How It Works", href: "#how-it-works" },
     { label: "Testimonials", href: "#testimonials" },
   ],
@@ -26,43 +25,41 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="py-16 border-t border-border">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
+    <footer className="py-24 bg-secondary text-white border-t border-white/5 relative overflow-hidden">
+      {/* Background accents */}
+      <div className="absolute bottom-0 right-0 w-1/3 h-full bg-primary/5 blur-[100px] pointer-events-none" />
+      
+      <div className="max-w-[1200px] mx-auto px-6 relative z-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-16 mb-20">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-6">
-              <Image
-                src="/images/vex-logo.png"
-                alt="Vex"
-                width={100}
-                height={40}
-                className="h-10 w-auto"
-              />
+            <Link href="/" className="flex items-center gap-2 group mb-8">
+              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center font-black italic transform -rotate-6 group-hover:rotate-0 transition-transform text-secondary text-xl">V</div>
+              <span className="text-3xl font-black tracking-tighter uppercase italic">Vex</span>
             </Link>
-            <p className="text-muted-foreground mb-6 max-w-sm leading-relaxed">
+            <p className="text-white/70 mb-10 max-w-xs leading-relaxed font-medium">
               AI-powered career acceleration. Land your dream job faster with skill analysis, personalized learning, and automated applications.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors">
-                <Github className="w-5 h-5" />
-              </a>
+              {[Twitter, Linkedin, Github].map((Icon, i) => (
+                <a 
+                  key={i} 
+                  href="#" 
+                  className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/50 hover:text-secondary hover:bg-primary transition-all duration-300"
+                >
+                  <Icon className="w-5 h-5" />
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Product Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Product</h4>
-            <ul className="space-y-3">
-              {footerLinks.product.map((link) => (
+            <h4 className="font-black text-white uppercase tracking-widest text-xs mb-8">Product</h4>
+            <ul className="space-y-4">
+              {[{ label: "Features", href: "#features" }, { label: "How It Works", href: "#how-it-works" }, { label: "Testimonials", href: "#testimonials" }].map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href={link.href} className="text-white/80 hover:text-primary transition-colors font-bold uppercase tracking-widest text-xs">
                     {link.label}
                   </Link>
                 </li>
@@ -72,11 +69,11 @@ export function Footer() {
 
           {/* Company Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Company</h4>
-            <ul className="space-y-3">
+            <h4 className="font-black text-white uppercase tracking-widest text-xs mb-8">Company</h4>
+            <ul className="space-y-4">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href={link.href} className="text-white/80 hover:text-primary transition-colors font-bold uppercase tracking-widest text-xs">
                     {link.label}
                   </Link>
                 </li>
@@ -86,11 +83,11 @@ export function Footer() {
 
           {/* Legal Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Legal</h4>
-            <ul className="space-y-3">
+            <h4 className="font-black text-white uppercase tracking-widest text-xs mb-8">Legal</h4>
+            <ul className="space-y-4">
               {footerLinks.legal.map((link) => (
                 <li key={link.label}>
-                  <Link href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href={link.href} className="text-white/80 hover:text-primary transition-colors font-bold uppercase tracking-widest text-xs">
                     {link.label}
                   </Link>
                 </li>
@@ -99,12 +96,12 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
+        <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
+          <p className="text-xs font-black uppercase tracking-[0.3em] text-white/20">
             &copy; {new Date().getFullYear()} Vex. All rights reserved.
           </p>
-          <p className="text-sm text-muted-foreground">
-            Made with AI. Built for humans.
+          <p className="text-xs font-black uppercase tracking-[0.3em] text-white/20 italic">
+            Built for the future.
           </p>
         </div>
       </div>

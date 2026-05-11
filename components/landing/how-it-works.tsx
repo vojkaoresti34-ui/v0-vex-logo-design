@@ -31,34 +31,34 @@ export function HowItWorks() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="how-it-works" className="py-24 relative bg-card/30">
+    <section id="how-it-works" className="py-32 relative bg-background">
       <div className="max-w-[1200px] mx-auto px-6" ref={containerRef}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-24"
         >
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
+          <span className="text-secondary font-bold text-xs uppercase tracking-[0.3em] mb-6 block">
             How It Works
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6" style={{ letterSpacing: "-0.02em" }}>
+          <h2 className="text-5xl md:text-6xl font-[900] text-foreground mb-8 tracking-tighter uppercase leading-none">
             From Signup to Hired
             <br />
-            <span className="text-primary">In 4 Simple Steps</span>
+            <span className="text-secondary italic">In 4 Simple Steps</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-[#898A8D] max-w-2xl mx-auto leading-relaxed font-medium">
             Our streamlined process gets you from where you are to where you want to be.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 relative">
           {/* Connection Line */}
-          <div className="hidden lg:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5 bg-border">
+          <div className="hidden lg:block absolute top-[5.5rem] left-[12.5%] right-[12.5%] h-1 bg-border/30">
             <motion.div
               initial={{ scaleX: 0 }}
               animate={isInView ? { scaleX: 1 } : {}}
-              transition={{ duration: 1, delay: 0.5 }}
+              transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="h-full bg-primary origin-left"
             />
           </div>
@@ -68,15 +68,15 @@ export function HowItWorks() {
               key={step.number}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              className="relative"
+              transition={{ duration: 0.6, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="relative group pt-10"
             >
-              <div className="bg-card border border-border rounded-2xl p-6 h-full hover:border-primary/50 transition-colors duration-300">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-black text-lg mb-6 relative z-10">
+              <div className="bg-white border-2 border-border/10 rounded-[2.5rem] p-10 h-full hover:border-primary transition-all duration-500 shadow-xl shadow-black/[0.02]">
+                <div className="w-16 h-16 rounded-full bg-secondary text-primary flex items-center justify-center font-black text-xl mb-8 relative z-10 transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
                   {step.number}
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">{step.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                <h3 className="text-2xl font-black text-secondary mb-4 uppercase tracking-tight italic">{step.title}</h3>
+                <p className="text-[#898A8D] leading-relaxed font-medium">{step.description}</p>
               </div>
             </motion.div>
           ))}
