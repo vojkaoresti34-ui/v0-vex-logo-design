@@ -32,7 +32,7 @@ export function Features() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="features" className="py-32 relative bg-secondary overflow-hidden">
+    <section id="features" className="py-20 md:py-32 relative bg-secondary overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/5 blur-[120px] -z-0" />
       
@@ -46,7 +46,7 @@ export function Features() {
           <span className="text-primary font-bold text-xs uppercase tracking-[0.3em] mb-6 block">
             Core Features
           </span>
-          <h2 className="text-5xl md:text-6xl font-[900] text-white mb-8 tracking-tighter uppercase leading-none">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-[900] text-white mb-6 md:mb-8 tracking-tighter uppercase leading-none">
             Everything You Need to
             <br />
             <span className="text-primary italic">Accelerate Your Career</span>
@@ -56,7 +56,7 @@ export function Features() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}

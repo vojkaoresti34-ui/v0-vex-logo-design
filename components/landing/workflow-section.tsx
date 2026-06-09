@@ -9,7 +9,7 @@ export function WorkflowSection() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="workflow" className="py-32 relative bg-background border-t border-border/10 overflow-hidden">
+    <section id="workflow" className="py-20 md:py-32 relative bg-background border-t border-border/10 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
       
@@ -23,7 +23,7 @@ export function WorkflowSection() {
           <span className="text-secondary font-bold text-xs uppercase tracking-[0.3em] mb-6 block">
             Powerful Automation
           </span>
-          <h2 className="text-4xl md:text-5xl font-[900] text-foreground mb-6 tracking-tighter uppercase leading-none">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-[900] text-foreground mb-6 tracking-tighter uppercase leading-none">
             The Logic Behind The <span className="text-secondary italic">Magic</span>
           </h2>
           <p className="text-xl text-[#898A8D] max-w-2xl mx-auto leading-relaxed font-medium">

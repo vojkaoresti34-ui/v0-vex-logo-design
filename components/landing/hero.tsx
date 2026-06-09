@@ -84,9 +84,9 @@ export function Hero() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-10 bg-white border border-border shadow-sm">
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full mb-10 bg-card border border-border shadow-sm">
             <span className="w-2 h-2 bg-primary rounded-full" />
-            <span className="text-xs font-bold uppercase tracking-widest text-[#898A8D]">AI-Powered Career Acceleration</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">AI-Powered Career Acceleration</span>
           </div>
         </motion.div>
 
@@ -95,7 +95,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-6xl md:text-7xl lg:text-8xl font-[900] tracking-[-0.04em] text-foreground mb-8 text-balance uppercase"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-[900] tracking-[-0.04em] text-foreground mb-6 sm:mb-8 text-balance uppercase leading-[1.1]"
         >
           Land Your Dream Job{" "}
           <span className="inline-block relative">
@@ -115,7 +115,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="text-lg md:text-xl text-[#898A8D] max-w-2xl mx-auto mb-12 leading-relaxed font-medium"
+          className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 sm:mb-12 leading-relaxed font-medium"
         >
           Vex identifies your skill gaps, generates personalized courses, improves your CV, 
           and automatically applies to jobs. Your AI career co-pilot.
@@ -129,7 +129,7 @@ export function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
           <Link
-            href="#"
+            href="/onboarding"
             className="group bg-primary text-primary-foreground px-10 py-5 rounded-full text-lg font-bold hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 shadow-2xl shadow-primary/40 border-b-4 border-primary/20"
           >
             Start Free Trial
@@ -170,18 +170,18 @@ export function Hero() {
                     <div className="h-2 bg-secondary/50 rounded-full w-1/2" />
                   </div>
                 </div>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="bg-secondary rounded-lg p-4">
-                    <div className="text-primary font-bold text-2xl">87%</div>
-                    <div className="text-xs text-secondary-foreground/60">Skill Match</div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                  <div className="bg-secondary rounded-lg p-3 sm:p-4 flex flex-row sm:flex-col items-center sm:items-start justify-between sm:justify-center">
+                    <div className="text-primary font-bold text-xl sm:text-2xl">87%</div>
+                    <div className="text-[10px] sm:text-xs text-secondary-foreground/60">Skill Match</div>
                   </div>
-                  <div className="bg-secondary rounded-lg p-4">
-                    <div className="text-primary font-bold text-2xl">12</div>
-                    <div className="text-xs text-secondary-foreground/60">Courses</div>
+                  <div className="bg-secondary rounded-lg p-3 sm:p-4 flex flex-row sm:flex-col items-center sm:items-start justify-between sm:justify-center">
+                    <div className="text-primary font-bold text-xl sm:text-2xl">12</div>
+                    <div className="text-[10px] sm:text-xs text-secondary-foreground/60">Courses</div>
                   </div>
-                  <div className="bg-secondary rounded-lg p-4">
-                    <div className="text-primary font-bold text-2xl">24</div>
-                    <div className="text-xs text-secondary-foreground/60">Applications</div>
+                  <div className="bg-secondary rounded-lg p-3 sm:p-4 flex flex-row sm:flex-col items-center sm:items-start justify-between sm:justify-center">
+                    <div className="text-primary font-bold text-xl sm:text-2xl">24</div>
+                    <div className="text-[10px] sm:text-xs text-secondary-foreground/60">Applications</div>
                   </div>
                 </div>
                 <div className="flex gap-2">

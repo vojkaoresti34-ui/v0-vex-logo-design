@@ -12,14 +12,14 @@ const formats = ["doc", "pdf", "txt", "md", "csv", "zip", "png", "jpg", "json"] 
 
 export function CVComparison() {
   return (
-    <section className="py-24 bg-muted/30">
+    <section className="py-20 md:py-24 bg-muted/30">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 bg-primary/10 text-primary font-bold text-sm tracking-wide">
             <Sparkles className="w-4 h-4" />
             Vex Resume Engine
           </div>
-          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-foreground mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-foreground mb-6">
             From Messy to <span className="text-primary">Harvard-Level</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -28,7 +28,7 @@ export function CVComparison() {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="p-2 bg-white rounded-2xl shadow-xl border border-border">
+          <div className="p-2 bg-card rounded-2xl shadow-xl border border-border">
             <ImageComparison className="aspect-[4/3] md:aspect-[16/9] w-full rounded-xl" enableHover>
               {/* Bad CV (Left) */}
               <ImageComparisonImage

@@ -45,7 +45,7 @@ export function FAQ() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="faq" className="py-32 relative bg-background">
+    <section id="faq" className="py-20 md:py-32 relative bg-background">
       <div className="max-w-[800px] mx-auto px-6" ref={containerRef}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -56,12 +56,12 @@ export function FAQ() {
           <span className="text-secondary font-bold text-xs uppercase tracking-[0.3em] mb-6 block">
             FAQ
           </span>
-          <h2 className="text-5xl md:text-6xl font-[900] text-foreground mb-8 tracking-tighter uppercase leading-none">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-[900] text-foreground mb-6 md:mb-8 tracking-tighter uppercase leading-none">
             Frequently Asked
             <br />
             <span className="text-secondary italic">Questions</span>
           </h2>
-          <p className="text-xl text-[#898A8D] font-medium">
+          <p className="text-xl text-muted-foreground font-medium">
             Everything you need to know about Vex.
           </p>
         </motion.div>
@@ -76,12 +76,12 @@ export function FAQ() {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="border border-border/10 rounded-[2rem] px-8 py-2 bg-white/50 backdrop-blur-sm data-[state=open]:border-primary transition-all duration-500 shadow-sm"
+                className="border border-border/10 rounded-[2rem] px-6 sm:px-8 py-2 bg-card/50 backdrop-blur-sm data-[state=open]:border-primary transition-all duration-500 shadow-sm"
               >
-                <AccordionTrigger className="text-left text-secondary font-black uppercase tracking-tight text-lg hover:no-underline py-8 group">
+                <AccordionTrigger className="text-left text-secondary font-black uppercase tracking-tight text-base sm:text-lg hover:no-underline py-6 sm:py-8 group">
                   <span className="group-hover:text-primary transition-colors">{faq.question}</span>
                 </AccordionTrigger>
-                <AccordionContent className="text-[#898A8D] font-medium text-lg pb-8 leading-relaxed">
+                <AccordionContent className="text-muted-foreground font-medium text-base sm:text-lg pb-6 sm:pb-8 leading-relaxed">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

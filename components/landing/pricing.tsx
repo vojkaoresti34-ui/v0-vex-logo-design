@@ -64,7 +64,7 @@ export function Pricing() {
   const [isYearly, setIsYearly] = useState(true);
 
   return (
-    <section id="pricing" className="py-24 relative bg-card/30">
+    <section id="pricing" className="py-20 md:py-24 relative bg-card/30">
       <div className="max-w-[1200px] mx-auto px-6" ref={containerRef}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -75,7 +75,7 @@ export function Pricing() {
           <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-4 block">
             Pricing
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-foreground mb-6" style={{ letterSpacing: "-0.02em" }}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground mb-6" style={{ letterSpacing: "-0.02em" }}>
             Simple, Transparent
             <br />
             <span className="text-primary">Pricing</span>
@@ -103,7 +103,7 @@ export function Pricing() {
           </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}

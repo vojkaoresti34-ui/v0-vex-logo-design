@@ -111,7 +111,7 @@ export function ProductPreview() {
   const activePreview = previews.find((p) => p.id === activeTab);
 
   return (
-    <section className="py-32 relative bg-background overflow-hidden">
+    <section className="py-20 md:py-32 relative bg-background overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-6 relative z-10" ref={containerRef}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -122,15 +122,15 @@ export function ProductPreview() {
           <span className="text-secondary font-bold text-xs uppercase tracking-[0.3em] mb-6 block">
             Product Preview
           </span>
-          <h2 className="text-5xl md:text-6xl font-[900] text-foreground mb-8 tracking-tighter uppercase leading-none">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-[900] text-foreground mb-6 md:mb-8 tracking-tighter uppercase leading-none">
             See Vex <span className="text-primary italic">In Action</span>
           </h2>
-          <p className="text-xl text-[#898A8D] max-w-2xl mx-auto leading-relaxed font-medium">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-medium">
             Experience the power of AI-driven career advancement tools.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -141,10 +141,10 @@ export function ProductPreview() {
               <button
                 key={preview.id}
                 onClick={() => setActiveTab(preview.id)}
-                className={`w-full text-left p-8 rounded-[2rem] border-2 transition-all duration-500 transform ${
+                className={`w-full text-left p-6 sm:p-8 rounded-[2rem] border-2 transition-all duration-500 transform ${
                   activeTab === preview.id
-                    ? "bg-white border-primary shadow-2xl shadow-primary/10 scale-[1.02]"
-                    : "bg-white/50 border-border/10 hover:border-primary/30"
+                    ? "bg-card border-primary shadow-2xl shadow-primary/10 scale-[1.02]"
+                    : "bg-card/50 border-border/10 hover:border-primary/30"
                 }`}
               >
                 <div className="flex items-start gap-6">
@@ -157,7 +157,7 @@ export function ProductPreview() {
                     <h3 className={`text-2xl font-black mb-2 uppercase tracking-tight italic ${activeTab === preview.id ? "text-secondary" : "text-muted-foreground"}`}>
                       {preview.title}
                     </h3>
-                    <p className="text-base text-[#898A8D] font-medium leading-relaxed">{preview.description}</p>
+                    <p className="text-base text-muted-foreground font-medium leading-relaxed">{preview.description}</p>
                   </div>
                 </div>
               </button>
@@ -174,7 +174,7 @@ export function ProductPreview() {
             <div className="absolute inset-0 bg-primary/20 blur-[100px] -z-0 rounded-full" />
             
             <div className="bg-secondary rounded-[3rem] p-2 relative z-10 shadow-2xl overflow-hidden border border-white/10">
-              <div className="bg-[#141414] rounded-[2.5rem] p-10 min-h-[500px]">
+              <div className="bg-[#141414] rounded-[2.5rem] p-6 sm:p-10 min-h-[500px]">
                 <div className="flex items-center gap-3 mb-10 border-b border-white/5 pb-6">
                   <div className="flex gap-2">
                     <div className="w-3 h-3 rounded-full bg-red-500/50" />

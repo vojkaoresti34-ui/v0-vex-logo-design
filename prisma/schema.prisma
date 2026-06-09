@@ -1,0 +1,535 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["partialIndexes", "driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model ATSAnalysis {
+  id              String   @id @db.VarChar(255)
+  resumeId        String   @db.VarChar(255)
+  jobDescription  String
+  score           Int
+  missingKeywords Json?
+  presentKeywords Json?
+  suggestions     Json?
+  sections        Json?
+  createdAt       DateTime @default(now()) @db.Timestamp(6)
+  Resume          Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([resumeId], map: "idx_ATSAnalysis_resumeId")
+}
+
+model Account {
+  id                String  @id @db.VarChar(255)
+  userId            String  @db.VarChar(255)
+  type              String  @db.VarChar(255)
+  provider          String  @db.VarChar(255)
+  providerAccountId String  @db.VarChar(255)
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String? @db.VarChar(255)
+  scope             String? @db.VarChar(255)
+  id_token          String?
+  session_state     String? @db.VarChar(255)
+  User              User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([provider, providerAccountId], map: "uq_Account_provider_providerAccountId")
+}
+
+model ActivityLog {
+  id        String   @id @db.VarChar(255)
+  userId    String   @db.VarChar(255)
+  action    String   @db.VarChar(255)
+  entity    String?  @db.VarChar(255)
+  entityId  String?  @db.VarChar(255)
+  metadata  Json?
+  ipAddress String?  @db.VarChar(255)
+  userAgent String?  @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([createdAt], map: "idx_ActivityLog_createdAt")
+  @@index([userId], map: "idx_ActivityLog_userId")
+}
+
+model AiTokenLog {
+  id               String   @id @db.VarChar(255)
+  userId           String?  @db.VarChar(255)
+  action           String   @db.VarChar(100)
+  provider         String   @db.VarChar(50)
+  model            String   @db.VarChar(50)
+  promptTokens     Int      @default(0)
+  completionTokens Int      @default(0)
+  totalTokens      Int      @default(0)
+  status           String   @db.VarChar(50)
+  errorMessage     String?
+  createdAt        DateTime @default(now()) @db.Timestamp(6)
+  User             User?    @relation(fields: [userId], references: [id], onUpdate: NoAction)
+
+  @@index([createdAt], map: "idx_AiTokenLog_createdAt")
+  @@index([userId], map: "idx_AiTokenLog_userId")
+}
+
+model Application {
+  id                       String                     @id @db.VarChar(255)
+  userId                   String                     @db.VarChar(255)
+  jobId                    String?                    @db.VarChar(255)
+  resumeId                 String?                    @db.VarChar(255)
+  coverLetterId            String?                    @db.VarChar(255)
+  company                  String                     @db.VarChar(255)
+  jobTitle                 String                     @db.VarChar(255)
+  jobUrl                   String?
+  status                   String                     @default("SAVED") @db.VarChar(50)
+  appliedAt                DateTime?                  @db.Timestamp(6)
+  notes                    String?
+  salary                   String?                    @db.VarChar(255)
+  contacts                 Json?
+  nextAction               String?                    @db.VarChar(255)
+  nextActionDate           DateTime?                  @db.Timestamp(6)
+  isAutoApplied            Boolean                    @default(false)
+  source                   String?                    @db.VarChar(255)
+  priority                 String                     @default("MEDIUM") @db.VarChar(50)
+  createdAt                DateTime                   @default(now()) @db.Timestamp(6)
+  updatedAt                DateTime                   @default(now()) @db.Timestamp(6)
+  CoverLetter              CoverLetter?               @relation(fields: [coverLetterId], references: [id], onUpdate: NoAction)
+  Job                      Job?                       @relation(fields: [jobId], references: [id], onUpdate: NoAction)
+  Resume                   Resume?                    @relation(fields: [resumeId], references: [id], onUpdate: NoAction)
+  User                     User                       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  ApplicationStatusHistory ApplicationStatusHistory[]
+  InterviewSession         InterviewSession[]
+
+  @@index([status], map: "idx_Application_status")
+  @@index([userId], map: "idx_Application_userId")
+}
+
+model ApplicationStatusHistory {
+  id            String      @id @db.VarChar(255)
+  applicationId String      @db.VarChar(255)
+  status        String      @db.VarChar(50)
+  notes         String?
+  createdAt     DateTime    @default(now()) @db.Timestamp(6)
+  Application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([applicationId], map: "idx_ApplicationStatusHistory_applicationId")
+}
+
+model AutoApplyConfig {
+  id                 String    @id @db.VarChar(255)
+  userId             String    @unique @db.VarChar(255)
+  isEnabled          Boolean   @default(false)
+  maxApplications    Int       @default(10)
+  jobTypes           Json?
+  locations          Json?
+  salaryMin          Int?
+  keywords           Json?
+  blacklistCompanies Json?
+  dailyLimit         Int       @default(5)
+  appliedCount       Int       @default(0)
+  lastRunAt          DateTime? @db.Timestamp(6)
+  createdAt          DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime  @default(now()) @db.Timestamp(6)
+  User               User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model CareerRoadmap {
+  id             String      @id @db.VarChar(255)
+  userId         String      @unique @db.VarChar(255)
+  currentRole    String      @db.VarChar(255)
+  targetRole     String      @db.VarChar(255)
+  timelineMonths Int         @default(12)
+  progress       Int         @default(0)
+  aiPlan         Json?
+  createdAt      DateTime    @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime    @default(now()) @db.Timestamp(6)
+  User           User        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  Milestone      Milestone[]
+}
+
+model Conversation {
+  id                 String               @id @db.VarChar(255)
+  title              String?              @db.VarChar(255)
+  createdAt          DateTime             @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime             @default(now()) @db.Timestamp(6)
+  ConversationMember ConversationMember[]
+  Message            Message[]
+}
+
+model ConversationMember {
+  id             String       @id @db.VarChar(255)
+  conversationId String       @db.VarChar(255)
+  userId         String       @db.VarChar(255)
+  joinedAt       DateTime     @default(now()) @db.Timestamp(6)
+  lastReadAt     DateTime?    @db.Timestamp(6)
+  Conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  User           User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([conversationId, userId], map: "uq_ConversationMember_conversation_user")
+}
+
+model Course {
+  id               String             @id @db.VarChar(255)
+  title            String             @db.VarChar(255)
+  description      String
+  instructor       String?            @db.VarChar(255)
+  thumbnail        String?
+  url              String?
+  duration         Int?
+  level            String             @default("beginner") @db.VarChar(50)
+  category         String             @db.VarChar(255)
+  skills           Json?
+  rating           Float              @default(0.0)
+  isFree           Boolean            @default(true)
+  source           String?            @db.VarChar(255)
+  createdAt        DateTime           @default(now()) @db.Timestamp(6)
+  CourseEnrollment CourseEnrollment[]
+
+  @@index([category], map: "idx_Course_category")
+}
+
+model CourseEnrollment {
+  id          String    @id @db.VarChar(255)
+  userId      String    @db.VarChar(255)
+  courseId    String    @db.VarChar(255)
+  progress    Int       @default(0)
+  completedAt DateTime? @db.Timestamp(6)
+  createdAt   DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime  @default(now()) @db.Timestamp(6)
+  Course      Course    @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  User        User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([userId, courseId], map: "uq_CourseEnrollment_user_course")
+}
+
+model CoverLetter {
+  id          String        @id @db.VarChar(255)
+  userId      String        @db.VarChar(255)
+  title       String        @db.VarChar(255)
+  content     String
+  jobTitle    String?       @db.VarChar(255)
+  company     String?       @db.VarChar(255)
+  tone        String        @default("professional") @db.VarChar(255)
+  isGenerated Boolean       @default(false)
+  createdAt   DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime      @default(now()) @db.Timestamp(6)
+  Application Application[]
+  User        User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId], map: "idx_CoverLetter_userId")
+}
+
+model EmailCampaign {
+  id        String    @id @db.VarChar(255)
+  userId    String    @db.VarChar(255)
+  subject   String    @db.VarChar(255)
+  body      String
+  recipient String    @db.VarChar(255)
+  company   String?   @db.VarChar(255)
+  status    String    @default("draft") @db.VarChar(50)
+  sentAt    DateTime? @db.Timestamp(6)
+  openedAt  DateTime? @db.Timestamp(6)
+  repliedAt DateTime? @db.Timestamp(6)
+  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt DateTime  @default(now()) @db.Timestamp(6)
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId], map: "idx_EmailCampaign_userId")
+}
+
+model Headshot {
+  id        String   @id @db.VarChar(255)
+  userId    String   @db.VarChar(255)
+  imageUrl  String
+  fileKey   String   @db.VarChar(255)
+  style     String?  @db.VarChar(255)
+  isActive  Boolean  @default(false)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId], map: "idx_Headshot_userId")
+}
+
+model InterviewQA {
+  id               String           @id @db.VarChar(255)
+  sessionId        String           @db.VarChar(255)
+  question         String
+  answer           String?
+  feedback         String?
+  score            Int?
+  category         String?          @db.VarChar(255)
+  timeSpent        Int?
+  createdAt        DateTime         @default(now()) @db.Timestamp(6)
+  InterviewSession InterviewSession @relation(fields: [sessionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([sessionId], map: "idx_InterviewQA_sessionId")
+}
+
+model InterviewSession {
+  id            String        @id @db.VarChar(255)
+  userId        String        @db.VarChar(255)
+  applicationId String?       @db.VarChar(255)
+  type          String        @default("BEHAVIORAL") @db.VarChar(50)
+  role          String?       @db.VarChar(255)
+  company       String?       @db.VarChar(255)
+  status        String        @default("IN_PROGRESS") @db.VarChar(50)
+  duration      Int?
+  overallScore  Int?
+  feedback      String?
+  createdAt     DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime      @default(now()) @db.Timestamp(6)
+  InterviewQA   InterviewQA[]
+  Application   Application?  @relation(fields: [applicationId], references: [id], onUpdate: NoAction)
+  User          User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId], map: "idx_InterviewSession_userId")
+}
+
+model Job {
+  id              String        @id @db.VarChar(255)
+  title           String        @db.VarChar(255)
+  company         String        @db.VarChar(255)
+  location        String?       @db.VarChar(255)
+  type            String        @default("FULL_TIME") @db.VarChar(50)
+  salary          String?       @db.VarChar(255)
+  salaryMin       Int?
+  salaryMax       Int?
+  description     String
+  requirements    Json?
+  skills          Json?
+  benefits        Json?
+  remote          Boolean       @default(false)
+  source          String?       @db.VarChar(255)
+  sourceUrl       String?
+  postedAt        DateTime      @default(now()) @db.Timestamp(6)
+  expiresAt       DateTime?     @db.Timestamp(6)
+  isActive        Boolean       @default(true)
+  logoUrl         String?
+  industry        String?       @db.VarChar(255)
+  experienceLevel String        @default("MID") @db.VarChar(50)
+  createdAt       DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime      @default(now()) @db.Timestamp(6)
+  Application     Application[]
+  SavedJob        SavedJob[]
+
+  @@index([industry], map: "idx_Job_industry")
+  @@index([isActive], map: "idx_Job_isActive")
+}
+
+model Message {
+  id             String       @id @db.VarChar(255)
+  conversationId String       @db.VarChar(255)
+  senderId       String       @db.VarChar(255)
+  content        String
+  isRead         Boolean      @default(false)
+  createdAt      DateTime     @default(now()) @db.Timestamp(6)
+  Conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  User           User         @relation(fields: [senderId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([conversationId], map: "idx_Message_conversationId")
+}
+
+model Milestone {
+  id            String        @id @db.VarChar(255)
+  roadmapId     String        @db.VarChar(255)
+  title         String        @db.VarChar(255)
+  description   String?
+  dueDate       DateTime?     @db.Timestamp(6)
+  completed     Boolean       @default(false)
+  completedAt   DateTime?     @db.Timestamp(6)
+  order         Int
+  category      String?       @db.VarChar(255)
+  createdAt     DateTime      @default(now()) @db.Timestamp(6)
+  CareerRoadmap CareerRoadmap @relation(fields: [roadmapId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([roadmapId], map: "idx_Milestone_roadmapId")
+}
+
+model Notification {
+  id        String   @id @db.VarChar(255)
+  userId    String   @db.VarChar(255)
+  type      String   @db.VarChar(50)
+  title     String   @db.VarChar(255)
+  message   String
+  link      String?  @db.VarChar(255)
+  isRead    Boolean  @default(false)
+  metadata  Json?
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId, isRead], map: "idx_Notification_user_read")
+}
+
+model Portfolio {
+  id               String             @id @db.VarChar(255)
+  userId           String             @unique @db.VarChar(255)
+  title            String?            @db.VarChar(255)
+  bio              String?
+  theme            String             @default("minimal") @db.VarChar(255)
+  customDomain     String?            @db.VarChar(255)
+  isPublished      Boolean            @default(false)
+  slug             String             @unique @db.VarChar(255)
+  views            Int                @default(0)
+  createdAt        DateTime           @default(now()) @db.Timestamp(6)
+  updatedAt        DateTime           @default(now()) @db.Timestamp(6)
+  User             User               @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  PortfolioProject PortfolioProject[]
+}
+
+model PortfolioProject {
+  id           String    @id @db.VarChar(255)
+  portfolioId  String    @db.VarChar(255)
+  title        String    @db.VarChar(255)
+  description  String
+  technologies Json?
+  imageUrl     String?
+  liveUrl      String?
+  githubUrl    String?
+  featured     Boolean   @default(false)
+  order        Int       @default(0)
+  createdAt    DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime  @default(now()) @db.Timestamp(6)
+  Portfolio    Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([portfolioId], map: "idx_PortfolioProject_portfolioId")
+}
+
+model Profile {
+  id                 String   @id @db.VarChar(255)
+  userId             String   @unique @db.VarChar(255)
+  headline           String?  @db.VarChar(255)
+  bio                String?
+  location           String?  @db.VarChar(255)
+  phone              String?  @db.VarChar(255)
+  website            String?  @db.VarChar(255)
+  linkedinUrl        String?  @db.VarChar(255)
+  githubUrl          String?  @db.VarChar(255)
+  twitterUrl         String?  @db.VarChar(255)
+  currentRole        String?  @db.VarChar(255)
+  targetRole         String?  @db.VarChar(255)
+  yearsExperience    Int?
+  salaryMin          Int?
+  salaryMax          Int?
+  jobTypes           Json?
+  industries         Json?
+  profileStrength    Int      @default(0)
+  avatarUrl          String?
+  avatarKey          String?  @db.VarChar(255)
+  isPublic           Boolean  @default(false)
+  onboardingDone     Boolean  @default(false)
+  goal               String?  @db.VarChar(255)
+  tone               String?  @db.VarChar(255)
+  blacklistCompanies Json?
+  employmentStatus   String?  @db.VarChar(255)
+  startDate          String?  @db.VarChar(255)
+  workAuth           String?  @db.VarChar(255)
+  country            String?  @db.VarChar(255)
+  skills             Json?
+  languages          Json?
+  biggestWin         String?
+  createdAt          DateTime @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime @default(now()) @db.Timestamp(6)
+  User               User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model Resume {
+  id            String        @id @db.VarChar(255)
+  userId        String        @db.VarChar(255)
+  title         String        @db.VarChar(255)
+  fileUrl       String?
+  fileKey       String?       @db.VarChar(255)
+  parsedContent Json?
+  rawText       String?
+  template      String        @default("modern") @db.VarChar(255)
+  isDefault     Boolean       @default(false)
+  atsScore      Int?
+  version       Int           @default(1)
+  language      String        @default("en") @db.VarChar(50)
+  createdAt     DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt     DateTime      @default(now()) @db.Timestamp(6)
+  ATSAnalysis   ATSAnalysis[]
+  Application   Application[]
+  User          User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId], map: "idx_Resume_userId")
+}
+
+model SavedJob {
+  id        String   @id @db.VarChar(255)
+  userId    String   @db.VarChar(255)
+  jobId     String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  Job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([userId, jobId], map: "uq_SavedJob_user_job")
+}
+
+model Session {
+  id           String   @id @db.VarChar(255)
+  sessionToken String   @unique @db.VarChar(255)
+  userId       String   @db.VarChar(255)
+  expires      DateTime @db.Timestamp(6)
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model User {
+  id                 String               @id @db.VarChar(255)
+  email              String               @unique @db.VarChar(255)
+  emailVerified      DateTime?            @db.Timestamp(6)
+  name               String?              @db.VarChar(255)
+  image              String?
+  password           String?              @db.VarChar(255)
+  role               String               @default("USER") @db.VarChar(50)
+  plan               String               @default("FREE") @db.VarChar(50)
+  createdAt          DateTime             @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime             @default(now()) @db.Timestamp(6)
+  clerkId            String?              @unique(where: raw("(\"clerkId\" IS NOT NULL)"))
+  Account            Account[]
+  ActivityLog        ActivityLog[]
+  AiTokenLog         AiTokenLog[]
+  Application        Application[]
+  AutoApplyConfig    AutoApplyConfig?
+  CareerRoadmap      CareerRoadmap?
+  ConversationMember ConversationMember[]
+  CourseEnrollment   CourseEnrollment[]
+  CoverLetter        CoverLetter[]
+  EmailCampaign      EmailCampaign[]
+  Headshot           Headshot[]
+  InterviewSession   InterviewSession[]
+  Message            Message[]
+  Notification       Notification[]
+  Portfolio          Portfolio?
+  Profile            Profile?
+  Resume             Resume[]
+  SavedJob           SavedJob[]
+  Session            Session[]
+  UserSettings       UserSettings?
+}
+
+model UserSettings {
+  id                 String   @id @db.VarChar(255)
+  userId             String   @unique @db.VarChar(255)
+  emailNotifications Boolean  @default(true)
+  jobAlerts          Boolean  @default(true)
+  applicationUpdates Boolean  @default(true)
+  weeklyDigest       Boolean  @default(true)
+  autoApplyEnabled   Boolean  @default(false)
+  theme              String   @default("system") @db.VarChar(255)
+  language           String   @default("en") @db.VarChar(255)
+  timezone           String   @default("UTC") @db.VarChar(255)
+  profileVisibility  String   @default("private") @db.VarChar(255)
+  createdAt          DateTime @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime @default(now()) @db.Timestamp(6)
+  User               User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model VerificationToken {
+  identifier String   @db.VarChar(255)
+  token      String   @unique(map: "idx_VerificationToken_token") @db.VarChar(255)
+  expires    DateTime @db.Timestamp(6)
+
+  @@unique([identifier, token], map: "uq_VerificationToken_identifier_token")
+}

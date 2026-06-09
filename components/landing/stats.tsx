@@ -43,9 +43,9 @@ export function Stats() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section className="py-32 relative bg-background border-y border-border/50">
+    <section className="py-20 md:py-32 relative bg-background border-y border-border/50">
       <div className="max-w-[1200px] mx-auto px-6" ref={containerRef}>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -58,7 +58,7 @@ export function Stats() {
               }}
               className="text-center group"
             >
-              <div className="text-5xl md:text-6xl font-[900] text-primary mb-4 tracking-tighter uppercase tabular-nums">
+              <div className="text-4xl sm:text-5xl md:text-6xl font-[900] text-primary mb-4 tracking-tighter uppercase tabular-nums">
                 <CountUp end={stat.value} suffix={stat.suffix} />
               </div>
               <div className="text-sm font-black text-foreground mb-3 uppercase tracking-[0.2em]">{stat.label}</div>

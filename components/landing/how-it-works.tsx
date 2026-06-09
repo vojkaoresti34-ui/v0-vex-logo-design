@@ -31,7 +31,7 @@ export function HowItWorks() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="how-it-works" className="py-32 relative bg-background">
+    <section id="how-it-works" className="py-20 md:py-32 relative bg-background">
       <div className="max-w-[1200px] mx-auto px-6" ref={containerRef}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -42,17 +42,17 @@ export function HowItWorks() {
           <span className="text-secondary font-bold text-xs uppercase tracking-[0.3em] mb-6 block">
             How It Works
           </span>
-          <h2 className="text-5xl md:text-6xl font-[900] text-foreground mb-8 tracking-tighter uppercase leading-none">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-[900] text-foreground mb-8 tracking-tighter uppercase leading-none">
             From Signup to Hired
             <br />
             <span className="text-secondary italic">In 4 Simple Steps</span>
           </h2>
-          <p className="text-xl text-[#898A8D] max-w-2xl mx-auto leading-relaxed font-medium">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed font-medium">
             Our streamlined process gets you from where you are to where you want to be.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 relative">
           {/* Connection Line */}
           <div className="hidden lg:block absolute top-[5.5rem] left-[12.5%] right-[12.5%] h-1 bg-border/30">
             <motion.div
@@ -71,12 +71,12 @@ export function HowItWorks() {
               transition={{ duration: 0.6, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="relative group pt-10"
             >
-              <div className="bg-white border-2 border-border/10 rounded-[2.5rem] p-10 h-full hover:border-primary transition-all duration-500 shadow-xl shadow-black/[0.02]">
+              <div className="bg-card border-2 border-border/10 rounded-[2.5rem] p-10 h-full hover:border-primary transition-all duration-500 shadow-xl shadow-black/[0.02] dark:shadow-white/[0.02]">
                 <div className="w-16 h-16 rounded-full bg-secondary text-primary flex items-center justify-center font-black text-xl mb-8 relative z-10 transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
                   {step.number}
                 </div>
                 <h3 className="text-2xl font-black text-secondary mb-4 uppercase tracking-tight italic">{step.title}</h3>
-                <p className="text-[#898A8D] leading-relaxed font-medium">{step.description}</p>
+                <p className="text-muted-foreground leading-relaxed font-medium">{step.description}</p>
               </div>
             </motion.div>
           ))}

@@ -58,12 +58,12 @@ export function LogosSlider() {
           ))}
         </InfiniteSlider>
         <ProgressiveBlur
-          className='pointer-events-none absolute top-0 left-0 h-full w-[200px]'
+          className='pointer-events-none absolute top-0 left-0 h-full w-[100px] md:w-[200px]'
           direction='left'
           blurIntensity={1}
         />
         <ProgressiveBlur
-          className='pointer-events-none absolute top-0 right-0 h-full w-[200px]'
+          className='pointer-events-none absolute top-0 right-0 h-full w-[100px] md:w-[200px]'
           direction='right'
           blurIntensity={1}
         />

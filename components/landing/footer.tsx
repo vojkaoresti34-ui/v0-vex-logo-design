@@ -30,7 +30,7 @@ export function Footer() {
       <div className="absolute bottom-0 right-0 w-1/3 h-full bg-primary/5 blur-[100px] pointer-events-none" />
       
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-16 mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 sm:gap-16 mb-16 sm:mb-20">
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 group mb-8">
@@ -97,10 +97,10 @@ export function Footer() {
         </div>
 
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
-          <p className="text-xs font-black uppercase tracking-[0.3em] text-white/20">
+          <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] text-white/20 text-center md:text-left">
             &copy; {new Date().getFullYear()} Vex. All rights reserved.
           </p>
-          <p className="text-xs font-black uppercase tracking-[0.3em] text-white/20 italic">
+          <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] text-white/20 italic text-center md:text-right">
             Built for the future.
           </p>
         </div>
